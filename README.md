@@ -1,7 +1,7 @@
 # Summary
 Regarding to the paper, we provide code to achieve the goals as follows. Please cite the paper if you use any code from belows.
 
-## Part 1. Ground truth simulation under the folder "/PINs_PYTORCH/ground_truth_simulation/":
+## Part 1. Ground truth simulation under the folder "./ground_truth_simulation/":
     (./ground_truth_simulation/raw_traj_simulation_brownian_3d.py)          -> Generated 3-D trajectory with free diffusion;
     (./ground_truth_simulation/helper_image_born_wolf_single_spot.py)       -> Simulated images with single particle by Born-Wolf Point Spread Function;
     (./ground_truth_simulation/helper_image_DH_single_spot.py)              -> Simulated images with single particle by Double-Helix Point Spread Function;
@@ -11,7 +11,7 @@ Regarding to the paper, we provide code to achieve the goals as follows. Please 
     (./ground_truth_simulation/initial_loc_sampling.py)                     -> Helper function used for generating trajectories of which distance between any two particles is no smaller than a constant;
     (./ground_truth_simulation/raw_image_merging_multiple_spots_sCMOS.py)   -> Merge all particles into one image.
 
-## Part 2. Data under the folder "/PINs_PYTORCH/data/", which is for the ease of calculations:
+## Part 2. Data under the folder "./data/", which is for the ease of calculations:
     (./data/xcenter_unit_p512.npy)                          -> x center position of raw image (512x512 PX) under the Cartesian coordinate of which centering position is (0, 0), the unit is 1;
     (./data/ycenter_unit_p512.npy)                          -> y center position of raw image (512x512 PX) under the Cartesian coordinate of which centering position is (0, 0), the unit is 1;
     (./data/sigma_all_p512.csv)                             -> Pixel dependent readout noise for sCMOS data;
@@ -20,7 +20,7 @@ Regarding to the paper, we provide code to achieve the goals as follows. Please 
     (./data/exp_x_centers_P1200.npy)                        -> x center position of experimental image (1200x1200 PX) under the Cartesian coordinate of which centering position is (0, 0), the unit is the pixel width of 0.11 um;
     (./data/exp_y_centers_P1200.npy)                        -> y center position of experimental image (1200x1200 PX) under the Cartesian coordinate of which centering position is (0, 0), the unit is the pixel width of 0.11 um.
 
-## Part 3. main code of PINs under the folder "/PINs_PYTORCH/detection/":
+## Part 3. main code of PINs under the folder "./detection/":
     (./detection/workflow.py)                         -> main execution function for the training or evaluation process based on simulation dataset;
     (./detection/pin.py)                              -> PIN_{CNN};
     (./detection/pinmk2.py)                           -> PIN_{ResNet};
@@ -32,7 +32,7 @@ Regarding to the paper, we provide code to achieve the goals as follows. Please 
     (./detection/detect_real_world_data_born_wolf.py) -> execution function used for detecting experimental dataset;
     (./detection/real_world_dataset.py)               -> configuration function used for detecting experimental dataset.
 
-## Part 4. Analysis tools under the folder "/PINs_PYTORCH/analysis_tools/":    
+## Part 4. Analysis tools under the folder "./analysis_tools/":    
     (./detection/find_heatmap_ids.py)           -> based on simulation datasets, find the heatmap position (in a predefined coordinates) of a fixed emitter;
     (./detection/find_ground_truth.py)          -> based on simulation datasets, find ground_truth of a specific particle given its position in a predefined heatmap coordinates;
     (./detection/find_center_of_subregions.py)  -> based on simulation datasets, obtain the original center position of a given subregion;
@@ -43,7 +43,7 @@ Regarding to the paper, we provide code to achieve the goals as follows. Please 
     (./detection/experiment_find_centers.py)     -> based on experimental datasets, obtain the original center position of a given subregion;
     (./detection/experiment_img_extraction.py)   -> based on experimental datasets, conduct image cropping and extraction.
 
-## Part 5. execution file for PINs under the folder "/PINs_PYTORCH/experiments/":  
+## Part 5. execution file for PINs under the folder "./experiments/":  
     (./detection/experiments/detection_eval.yaml)       -> implement evaluation;
     (./detection/experiments/detection_supercloud.yaml) -> implement training.
 
