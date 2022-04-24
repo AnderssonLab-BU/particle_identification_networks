@@ -1,0 +1,13 @@
+EXPR_NAME: "Born-Wolf-PIN-MK1-EVAL"
+LOG_DIR: "./experiments/cnn_spt/BCE"
+TYPE: "EVAL"
+MODEL: "MK1"
+PSF: "Born-Wolf"
+
+EVAL:
+  DATA:
+    TRIAL_START: 0
+    TRIAL_END: 20
+    GT_JSON: "../simulation_data/brownian_traj_gt/3d_traj_brownian_20spots.json"
+    HOME: "../"
+  RESTORE_FROM: ""
