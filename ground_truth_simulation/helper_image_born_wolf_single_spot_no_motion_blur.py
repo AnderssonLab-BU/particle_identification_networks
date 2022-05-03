@@ -5,7 +5,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 from absl import flags
-from utils import get_logger
+from detection.utils import get_logger
 
 _logger = get_logger('Image Simulation with single spot.')
 
@@ -50,7 +50,8 @@ def image_simulation_born_wolf_single_spot(background, peak_intensity, D, Trial,
 
     # # # # # # # # # # # # # # # # # # # # enter imaging process # # # # # # # # # # # # # # # #  # # # # # # # # # # #
     # load interpolation for table lookup
-    fn_info = np.load('../data/fn_lambda_base_born_wolf_PIN_normalization.npy', allow_pickle=True)
+    fn_info = np.load(
+        '../data/fn_lambda_base_born_wolf_PIN_normalization.npy', allow_pickle=True)
     fn = fn_info.item()
 
     _logger.info('Spot #' + str(spot_label))

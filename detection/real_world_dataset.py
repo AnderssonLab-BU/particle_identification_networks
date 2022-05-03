@@ -1,15 +1,13 @@
-import json
 import os
 import random
-from skimage import io
-import cv2
-import numpy as np
+
+import skimage
 import torch
-from torch.utils.data import Dataset
-from utils import get_logger
+
+from detection.utils import get_logger
 
 
-class RealWorldDataset(Dataset):
+class RealWorldDataset(torch.utils.data.Dataset):
     def __init__(self, data_cfg):
         super().__init__()
         self._logger = get_logger("real_world_dataset")
@@ -26,7 +24,7 @@ class RealWorldDataset(Dataset):
 
     def __getitem__(self, index):
         dp = self.images[index].copy()
-        frame = io.imread(dp["path"])
+        frame = skimage.io.imread(dp["path"])
         if frame is None:
             self._logger.warning("Frame is None, PATH: %s" % dp["path"])
             dp["img"] = torch.zeros([1200, 1200])

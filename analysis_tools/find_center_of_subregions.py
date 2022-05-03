@@ -1,19 +1,7 @@
-import json
 import os
-from os import stat
-from re import T
 
-import cv2
-import matplotlib.pyplot as pyplt
 import numpy as np
 import pandas as pd
-import torch
-from detection.bwdataset import BornWolfDataset
-from detection.config import get_default_detection_config
-
-from detection.pin import ParticleIdentificationNetwork
-from detection.pinmk2 import ParticleIdentificationNetworkMK2
-from detection.pinmk3 import ParticleIdentificationNetworkMK3
 
 
 def find_all_centers(save_dir, heatmap_ids_all, edge, desired_emitter):
@@ -41,7 +29,7 @@ def find_all_centers(save_dir, heatmap_ids_all, edge, desired_emitter):
         ai = id[0] * 8 - 4  # top
         aj = id[1] * 8 - 4  # left
         # review the ground truth heatmap calculation for details.
-        pix_id = ai * 512 + aj 
+        pix_id = ai * 512 + aj
         # calculate x center position of current emitter
         rec_id = []
         for i in range(edge):
@@ -66,8 +54,10 @@ if __name__ == '__main__':
     for desired_emitter in range(20):
         dir_path = '../extraction/'
         heatmap_ids_all = np.loadtxt(dir_path + "SBR%d_%s_Trial%d/heatmap_ids/heatmap_ids_all_spot%d.csv" %
-                                    (SBR, method, trial, desired_emitter), delimiter=",", skiprows=0)
-        save_dir = dir_path + "SBR%d_%s_Trial%d/centers/spot%d/" % (SBR, method, trial, desired_emitter)
+                                     (SBR, method, trial, desired_emitter), delimiter=",", skiprows=0)
+        save_dir = dir_path + \
+            "SBR%d_%s_Trial%d/centers/spot%d/" % (SBR,
+                                                  method, trial, desired_emitter)
         os.makedirs(save_dir, exist_ok=True)
         find_all_centers(save_dir=save_dir, heatmap_ids_all=heatmap_ids_all,
-                        edge=16, desired_emitter=desired_emitter)
+                         edge=16, desired_emitter=desired_emitter)

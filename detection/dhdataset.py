@@ -6,7 +6,8 @@ import cv2
 import numpy as np
 import torch
 from torch.utils.data import Dataset
-from utils import get_logger
+
+from detection.utils import get_logger
 
 _DELTA_X = 0.1
 _DELTA_Y = 0.1

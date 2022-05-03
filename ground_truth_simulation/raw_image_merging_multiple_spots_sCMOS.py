@@ -1,11 +1,9 @@
 import os
-import sys
 from datetime import datetime
 
 import cv2
 import numpy as np
-from absl import flags
-from utils import get_logger
+from detection.utils import get_logger
 
 _logger = get_logger('Image Simulation.')
 

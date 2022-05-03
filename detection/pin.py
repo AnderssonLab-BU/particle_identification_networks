@@ -1,5 +1,6 @@
 import torch
-from utils import FocalLoss
+
+from detection.utils import FocalLoss
 
 
 class ParticleIdentificationNetwork(torch.nn.Module):

@@ -9,6 +9,7 @@ from detection.pinmk2 import ParticleIdentificationNetworkMK2
 from detection.pinmk3 import ParticleIdentificationNetworkMK3
 from detection.real_world_dataset import RealWorldDataset
 
+
 def find_heatmap_loc_of_an_emitter(cfg, method, desired_emitter, threshold, heatmap_ids_all, index):
     heatmap_edge = 150
     if method == "PIN1":
@@ -93,13 +94,16 @@ if __name__ == '__main__':
         cfg.REAL_WORLD.DATA.HOME = "../real_world_jpgs/real_world_low_SBR_jpgs/"
 
     for desired_emitter in range(num_spots):
-        print('Start %s SBR level, %s for the emitter # %d.' %(SBR_level, method, desired_emitter))
-        save_dir = "../extraction/real_world_%sSBR_%s/heatmap_ids/" % (SBR_level, method)
+        print('Start %s SBR level, %s for the emitter # %d.' %
+              (SBR_level, method, desired_emitter))
+        save_dir = "../extraction/real_world_%sSBR_%s/heatmap_ids/" % (
+            SBR_level, method)
         os.makedirs(save_dir, exist_ok=True)
 
         heatmap_ids_all = []
         for i in range(num_images):
-            heatmap_ids_all = find_heatmap_loc_of_an_emitter(cfg = cfg, method=method, desired_emitter=desired_emitter, threshold=threshold_val, heatmap_ids_all=heatmap_ids_all, index=i)
+            heatmap_ids_all = find_heatmap_loc_of_an_emitter(
+                cfg=cfg, method=method, desired_emitter=desired_emitter, threshold=threshold_val, heatmap_ids_all=heatmap_ids_all, index=i)
         # we only save the results of which length >= 50 timesteps.
         if len(heatmap_ids_all) >= 50:
             df = pd.DataFrame(heatmap_ids_all)

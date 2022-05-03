@@ -1,18 +1,14 @@
 import os
+
+import numpy as np
 import pandas as pd
-from os import stat
-import cv2
 import torch
-import matplotlib.pyplot as pyplt
-import numpy as np
-from re import T
-import torch
-import numpy as np
-from detection.config import get_default_detection_config
 from detection.bwdataset import BornWolfDataset
+from detection.config import get_default_detection_config
 from detection.pin import ParticleIdentificationNetwork
 from detection.pinmk2 import ParticleIdentificationNetworkMK2
 from detection.pinmk3 import ParticleIdentificationNetworkMK3
+
 
 def find_heatmap_loc_of_an_emitter(method, desired_emitter, G, threshold, num_spots, heatmap_ids_all, trial, index):
     if method == "PIN1":
@@ -108,7 +104,7 @@ if __name__ == '__main__':
         heatmap_ids_all = []
         for i in range(num_images):
             heatmap_ids_all = find_heatmap_loc_of_an_emitter(method=method, desired_emitter=desired_emitter,
-                                                             G=10*SBR, threshold=threshold_val, num_spots=num_spots, heatmap_ids_all=heatmap_ids_all, trial = trial, index=i)
+                                                             G=10*SBR, threshold=threshold_val, num_spots=num_spots, heatmap_ids_all=heatmap_ids_all, trial=trial, index=i)
         # we only save the results of which length >= 50 timesteps.
         if len(heatmap_ids_all) >= 50:
             df = pd.DataFrame(heatmap_ids_all)

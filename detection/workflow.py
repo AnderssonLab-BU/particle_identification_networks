@@ -1,14 +1,13 @@
 import gc
+import json
 import math
 import os
 import sys
 from datetime import datetime
-import json
-import matplotlib.pyplot as plt
+
 import numpy as np
 import torch
 import torch.distributed as dist
-import torch.multiprocessing
 import torch.multiprocessing as mp
 from absl import flags
 from sklearn.metrics import average_precision_score, precision_recall_curve
@@ -16,15 +15,16 @@ from torch.nn.parallel import DistributedDataParallel
 from torch.optim.lr_scheduler import StepLR
 from torch.utils.data import DataLoader, DistributedSampler
 from tqdm import tqdm
-from utils import (TqdmToLogger, get_logger, prepare_training_checkpoint_directory)
 
+from detection.astigdataset import AstigmatismDataset
+from detection.bwdataset import BornWolfDataset
 from detection.config import get_default_detection_config
 from detection.dhdataset import DoubleHelixDataset
-from detection.bwdataset import BornWolfDataset
-from detection.astigdataset import AstigmatismDataset
 from detection.pin import ParticleIdentificationNetwork
 from detection.pinmk2 import ParticleIdentificationNetworkMK2
 from detection.pinmk3 import ParticleIdentificationNetworkMK3
+from detection.utils import (TqdmToLogger, get_logger,
+                             prepare_training_checkpoint_directory)
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -125,7 +125,7 @@ def train_model_on_dataset(rank, train_cfg):
                         _logger.info("feat2_loss\t%.4f; feat3_loss\t%.4f; feat4_loss\t%.4f" % (
                             loss["feat2_loss"].data.item(), loss["feat3_loss"].data.item(), loss["feat4_loss"].data.item()))
 
-            if global_step % train_cfg.TRAIN.EVAL_FREQ == 0 and global_step != 0:  
+            if global_step % train_cfg.TRAIN.EVAL_FREQ == 0 and global_step != 0:
                 # add validation into training process
                 model.eval()
                 all_targets = []
@@ -158,13 +158,14 @@ def train_model_on_dataset(rank, train_cfg):
                 _logger.info("Computing and gathering all heatmaps.")
                 all_targets = torch.cat(all_targets).cpu().numpy()
                 all_predictions = torch.cat(all_predictions).cpu().numpy()
-                average_precision = average_precision_score(all_targets, all_predictions)
+                average_precision = average_precision_score(
+                    all_targets, all_predictions)
 
                 # if AP increases, then save the training weights
                 if average_precision >= best_average_precision:
                     _logger.info("BETTER AP FOUND: %.4f" % average_precision)
                     best_average_precision = average_precision
-                    if rank == 0:  
+                    if rank == 0:
                         checkpoint_file = os.path.join(train_cfg.LOG_DIR,
                                                        train_cfg.EXPR_NAME, "checkpoints",
                                                        "CKPT-E%d-S%d.pth" % (

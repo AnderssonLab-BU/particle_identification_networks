@@ -21,7 +21,7 @@ def find_readout_noise(save_dir, sigma_all, heatmap_ids_all, edge, desired_emitt
         ai = id[0] * 8 - 4  # top
         aj = id[1] * 8 - 4  # left
         # review the ground truth heatmap calculation for details.
-        pix_id = ai * 512 + aj 
+        pix_id = ai * 512 + aj
         # calculate position of current emitter
         rec_id = []
         for i in range(edge):
@@ -45,6 +45,7 @@ if __name__ == '__main__':
         save_dir = dir_path + "SBR%d_%s_Trial%d/readout_noise/spot%d/" % (
             SBR, method, trial, desired_emitter)
         os.makedirs(save_dir, exist_ok=True)
-        sigma_all = np.loadtxt('../sigma_all_p512.csv', delimiter=",", skiprows=0)
+        sigma_all = np.loadtxt('../sigma_all_p512.csv',
+                               delimiter=",", skiprows=0)
         find_readout_noise(save_dir=save_dir, sigma_all=sigma_all, heatmap_ids_all=heatmap_ids_all,
                            edge=16, desired_emitter=desired_emitter)

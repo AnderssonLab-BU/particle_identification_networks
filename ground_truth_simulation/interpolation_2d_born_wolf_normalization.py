@@ -4,7 +4,7 @@ import numpy as np
 import scipy.integrate
 from joblib import Parallel, delayed
 from scipy.interpolate import RegularGridInterpolator
-from utils import get_logger
+from detection.utils import get_logger
 
 _logger = get_logger("Interpolation for Born-Wolf PSF used in CNN.")
 

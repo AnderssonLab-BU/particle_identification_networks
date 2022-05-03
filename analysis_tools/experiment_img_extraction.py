@@ -1,4 +1,5 @@
 import os
+
 import matplotlib.pyplot as pyplt
 import numpy as np
 from detection.config import get_default_detection_config
@@ -13,16 +14,13 @@ def crop_image(save_dir, cfg, heatmap_id):
         raw_img = Image.open(dp["path"])
         i = id[0]
         j = id[1]
-        # Assume the edge of cropped image is 16.
-        # left_top = (j*8-4, i*8-4) # (left, top)
-        # right_bottom = (j*8+12, i*8+12) # (right, bottom)
         left = j*8-4
         top = i*8-4
         right = j*8+12
         bottom = i*8+12
         cropped_img = raw_img.crop((left, top, right, bottom))
         pyplt.imshow(cropped_img, cmap="gray")
-        cropped_img.save(save_dir + "img%04d.jpg" % t )
+        cropped_img.save(save_dir + "img%04d.jpg" % t)
 
 
 if __name__ == "__main__":
@@ -40,8 +38,10 @@ if __name__ == "__main__":
 
     for desired_emitter in range(num_emitters):
         heatmap_ids_all = np.loadtxt(dir_path + "real_world_%sSBR_%s/heatmap_ids/heatmap_ids_all_spot%d.csv" %
-                                    (SBR_level, method, desired_emitter), delimiter=",", skiprows=0)
-        save_dir = dir_path + "real_world_%sSBR_%s/cropped_imgs/spot%d/" % (SBR_level, method, desired_emitter)
+                                     (SBR_level, method, desired_emitter), delimiter=",", skiprows=0)
+        save_dir = dir_path + \
+            "real_world_%sSBR_%s/cropped_imgs/spot%d/" % (
+                SBR_level, method, desired_emitter)
         os.makedirs(save_dir, exist_ok=True)
-        crop_image(save_dir = save_dir, cfg = cfg, heatmap_id = heatmap_ids_all)
+        crop_image(save_dir=save_dir, cfg=cfg, heatmap_id=heatmap_ids_all)
     print('Finished!')

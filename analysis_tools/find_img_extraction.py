@@ -1,5 +1,5 @@
 import os
-from os import stat
+
 import matplotlib.pyplot as pyplt
 import numpy as np
 from detection.bwdataset import BornWolfDataset
@@ -29,7 +29,7 @@ def crop_image(save_dir, heatmap_id, desired_emitter, num_spots, G):
         bottom = i*8+12
         cropped_img = raw_img.crop((left, top, right, bottom))
         pyplt.imshow(cropped_img, cmap="gray")
-        cropped_img.save(save_dir + "img%04d.jpg" % t )
+        cropped_img.save(save_dir + "img%04d.jpg" % t)
 
 
 if __name__ == "__main__":
@@ -40,9 +40,11 @@ if __name__ == "__main__":
     dir_path = '../extraction/'
     for desired_emitter in range(20):
         heatmap_ids_all = np.loadtxt(dir_path + "SBR%d_%s_Trial%d/heatmap_ids/heatmap_ids_all_spot%d.csv" %
-                                    (SBR, method, trial, desired_emitter), delimiter=",", skiprows=0)
-        save_dir = dir_path + "SBR%d_%s_Trial%d/cropped_imgs/spot%d/" % (SBR, method, trial, desired_emitter)
+                                     (SBR, method, trial, desired_emitter), delimiter=",", skiprows=0)
+        save_dir = dir_path + \
+            "SBR%d_%s_Trial%d/cropped_imgs/spot%d/" % (
+                SBR, method, trial, desired_emitter)
         os.makedirs(save_dir, exist_ok=True)
         crop_image(save_dir=save_dir, heatmap_id=heatmap_ids_all,
-                desired_emitter=desired_emitter, num_spots=20, G=int(10 * SBR))
+                   desired_emitter=desired_emitter, num_spots=20, G=int(10 * SBR))
     print('Finished!')

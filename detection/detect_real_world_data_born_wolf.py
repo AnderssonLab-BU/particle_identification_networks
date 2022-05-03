@@ -1,13 +1,14 @@
-import unittest
 import os
-import torch
+
 import matplotlib.pyplot as pyplt
 import numpy as np
+import torch
+
 from detection.config import get_default_detection_config
-from detection.real_world_dataset import RealWorldDataset
 from detection.pin import ParticleIdentificationNetwork
 from detection.pinmk2 import ParticleIdentificationNetworkMK2
 from detection.pinmk3 import ParticleIdentificationNetworkMK3
+from detection.real_world_dataset import RealWorldDataset
 
 
 def detect_real_world(num_images, cfg, trained_weights, threshold_prob):
@@ -112,7 +113,7 @@ if __name__ == '__main__':
     cfg.PSF = "Born-Wolf"
     cfg.REAL_WORLD.DATA.HOME = "../real_world_jpgs/real_world_high_SBR_jpgs/"
     threshold_prob = 0.3
-    all_methods = ["MK1"] 
+    all_methods = ["MK1"]
     num_images = 1
 
     for method in all_methods:
@@ -124,4 +125,5 @@ if __name__ == '__main__':
         elif cfg.MODEL == "MK3":
             trained_weights = "../experiments/cnn_spt/BCE/Born-Wolf-PIN-MK3-TRAIN_12_09.12:19:33.976674/checkpoints/CKPT-E1-S4000.pth"
 
-        detect_real_world(num_images=num_images, cfg=cfg, trained_weights=trained_weights, threshold_prob=threshold_prob)
+        detect_real_world(num_images=num_images, cfg=cfg,
+                          trained_weights=trained_weights, threshold_prob=threshold_prob)

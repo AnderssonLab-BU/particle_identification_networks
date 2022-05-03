@@ -1,10 +1,8 @@
 import json
 import os
-import pandas as pd
-import matplotlib.pyplot as pyplt
+
 import numpy as np
-from detection.bwdataset import BornWolfDataset
-from detection.config import get_default_detection_config
+import pandas as pd
 
 
 def read_gt(file_path, trial):

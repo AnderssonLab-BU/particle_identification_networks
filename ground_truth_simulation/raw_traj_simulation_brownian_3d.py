@@ -4,7 +4,7 @@ import random
 import numpy as np
 import pandas as pd
 from absl import flags
-from utils import get_logger
+from detection.utils import get_logger
 
 from initial_loc_sampling import generate_points_with_min_distance
 
@@ -25,7 +25,8 @@ def brownian_traj_3d(Trial, num_images, num_spots):
     :return: ground truth in x, y, and z position.
     """
     cwd = os.getcwd()
-    dir_save = cwd + "brownian_3D_trajectories_Trial" + str(Trial) + "_Image" + str(num_images) + "Spots" + str(num_spots)
+    dir_save = cwd + "brownian_3D_trajectories_Trial" + \
+        str(Trial) + "_Image" + str(num_images) + "Spots" + str(num_spots)
     if not os.path.exists(dir_save):
         os.makedirs(dir_save)
     # basic parameter settings.

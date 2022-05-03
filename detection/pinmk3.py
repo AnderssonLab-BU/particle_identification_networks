@@ -1,10 +1,10 @@
 from collections import OrderedDict
-from typing import Dict, List
+from typing import Dict
 
 import torch
-from utils import FocalLoss
 
 from detection.pinmk2 import ParticleIdentificationNetworkMK2
+from detection.utils import FocalLoss
 
 
 class ParticleIdentificationNetworkMK3(torch.nn.Module):
@@ -114,7 +114,7 @@ class ParticleIdentificationNetworkMK3(torch.nn.Module):
             x = torch.sigmoid(x)
             heatmaps[name] = x
         return heatmaps
-    
+
     def make_prediction(self, x):
         feat_maps = self.mk2.compute_feat_map_for_mk3(x)
         fpn_maps = self.compute_fpn_outputs(feat_maps)
@@ -125,7 +125,8 @@ class ParticleIdentificationNetworkMK3(torch.nn.Module):
             x = torch.squeeze(x, dim=-1)
             x = torch.sigmoid(x)
             agg_heatmap.append(x)
-        agg_heatmap = torch.max(torch.stack(agg_heatmap, dim=0), dim=0)[0].reshape([-1])
+        agg_heatmap = torch.max(torch.stack(agg_heatmap, dim=0), dim=0)[
+            0].reshape([-1])
         return agg_heatmap
 
     def compute_fpn_outputs(self, x: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
@@ -163,7 +164,7 @@ class ParticleIdentificationNetworkMK3(torch.nn.Module):
 
     def compute_loss(self, input, rank):
         batch_size = input["gt_heatmap"].shape[0]
-        loss = FocalLoss(alpha=.65,gamma=2.0,reduction="sum")
+        loss = FocalLoss(alpha=.65, gamma=2.0, reduction="sum")
         heatmaps = self.forward(input["img"].cuda(rank))
         gt_heatmap = input["gt_heatmap"].cuda(rank)
         # feat2_loss = loss(heatmaps["feat2"], gt_heatmap) / batch_size

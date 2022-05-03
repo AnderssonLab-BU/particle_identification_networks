@@ -1,12 +1,11 @@
-import os
-import sys
-from datetime import datetime
 import math
-from scipy import integrate
+import os
+from datetime import datetime
+
 import numpy as np
 import pandas as pd
-from absl import flags
-from utils import get_logger
+from detection.utils import get_logger
+from scipy import integrate
 
 _logger = get_logger('Image Simulation with single spot.')
 
@@ -28,7 +27,8 @@ def image_simulation_astigmatism_single_spot(num_spots, background, peak_intensi
         num_images) + 'D' + str(D) + '_astig_' + str(num_spots) + 'spots/'
     os.makedirs(dir_name, exist_ok=True)
     SBR = int(peak_intensity / background)
-    _logger.info('SBR' + str(SBR) + ', Trial ' + str(Trial) + ': create directory ... ')
+    _logger.info('SBR' + str(SBR) + ', Trial ' +
+                 str(Trial) + ': create directory ... ')
 
     num_pixels = 512 * 512
     delta_x = 0.1
@@ -46,7 +46,8 @@ def image_simulation_astigmatism_single_spot(num_spots, background, peak_intensi
     # # # # # # # # # # # # # # # # # # # # enter imaging process # # # # # # # # # # # # # # # #  # # # # # # # # # # #
     _logger.info('Spot #' + str(spot_label))
     # load ground truth with subsamples
-    read_path = './brownian_traj_gt/brownian_3D_trajectories_Trial' + str(Trial) + '_Image' + str(num_images) + 'Spots' + str(num_spots) + '/ground_truth_all_spot_' + str(spot_label) + '.csv'
+    read_path = './brownian_traj_gt/brownian_3D_trajectories_Trial' + str(Trial) + '_Image' + str(
+        num_images) + 'Spots' + str(num_spots) + '/ground_truth_all_spot_' + str(spot_label) + '.csv'
     ground_truth_all = np.loadtxt(read_path, delimiter=",", skiprows=0)
     x_ground_truth_all = ground_truth_all[0, :num_images]
     y_ground_truth_all = ground_truth_all[1, :num_images]

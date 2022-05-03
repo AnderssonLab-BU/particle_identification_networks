@@ -1,12 +1,10 @@
 import math
 import os
-import sys
 from datetime import datetime
 
 import numpy as np
 import pandas as pd
-from absl import flags
-from utils import get_logger
+from detection.utils import get_logger
 
 _logger = get_logger('Image Simulation with single spot.')
 
